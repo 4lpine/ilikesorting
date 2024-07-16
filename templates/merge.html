@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge Sort</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333; /* Dark background color */
+            color: #fff; /* Light text color */
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff; /* Light text color */
+        }
+
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #numbers {
+            padding: 8px;
+            width: calc(100% - 100px); /* Adjust to leave space for the button */
+            font-size: 16px;
+            border-radius: 5px 0 0 5px; /* Rounded left corners */
+            border: 1px solid #ccc;
+            background-color: #444; /* Light background color for input */
+            color: #333; /* Dark text color for input */
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: #444;
+            border: none;
+            cursor: pointer;
+            width: 94.5%;
+            border-radius: 5px 5px 5px 5px; /* Rounded right corners */
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        h2 {
+            color: #fff; /* Light text color */
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #fff; /* Light background color for steps */
+            color: #333; /* Dark text color for steps */
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            background-color: #fff; /* Light background color for output */
+            color: #333; /* Dark text color for output */
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Merge Sort Visualization</h1>
+    <form action="/merge" method="post">
+        <label for="numbers">Enter 10 numbers (comma-separated):</label><br><br>
+        <input type="text" id="numbers" name="numbers" required pattern="[0-9,]+" title="Please enter 10 numbers separated by commas"><br><br>
+        <button type="submit">Sort</button>
+    </form>
+
+    {% if steps %}
+    <h2>Merge Sort Steps:</h2>
+    <ul id="stepsList">
+        <!-- Placeholder for steps -->
+    </ul>
+    <script>
+        var steps = {{ steps | tojson }};
+        var stepsList = document.getElementById('stepsList');
+
+        // Function to display steps with a delay
+        function displaySteps() {
+            steps.forEach(function(step, index) {
+                setTimeout(function() {
+                    // Clear previous step
+                    stepsList.innerHTML = '';
+
+                    // Create new step element
+                    var stepElement = document.createElement('li');
+                    stepElement.textContent = 'Step ' + (index + 1) + ': ' + step.join(', ');
+                    stepsList.appendChild(stepElement);
+                }, index * 300); // Adjust delay time (index * 3000 means 3 seconds delay between each step)
+            });
+        }
+
+        // Call the function when the page loads or after rendering
+        displaySteps();
+    </script>
+    {% endif %}
+
+    {% if sorted_numbers %}
+    <h2>Output:</h2>
+    <p>{{ sorted_numbers }}</p>
+    {% endif %}
+    <div class="back-button">
+        <a href="/">< Back</a>
+    </div>
+</body>
+</html>
